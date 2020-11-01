@@ -18,14 +18,14 @@ custom:
 
 functions:
   getProductsList:
-    handler: handler.getProductsList
+    handler: handler.getAllProducts
     events:
       - http:
           path: products
           method: get
           cors: true
   getProductsById:
-    handler: handler.getProductsById
+    handler: handler.getProductById
     events:
       - http:
           path: products/{productId}

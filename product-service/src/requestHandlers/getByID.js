@@ -1,18 +1,21 @@
 import products from '../data/products.json';
+import { getHeaders, generateErrorResponse } from '../helpers/index.js'
 
 export const getProductById = async event => {
-    // const products = JSON.parse(productsJSON)
-    const id = event.pathParameters.customerId;
-    const product = products.find(a => a.id === id);
-    if (!product) {
-      return {
-        statusCode: 404
-      };
+    try {
+        const id = event.pathParameters.productId;
+        const product = products.find(a => a.id === id);
+        if (!product) {
+            throw new Error("Product not found");
+        }
+        return {
+            statusCode: 200,
+            body: JSON.stringify(
+                products[0]
+            ),
+            headers: getHeaders(),
+        }
+    } catch (e) {
+        return generateErrorResponse(e, 404)
     }
-    return {
-      statusCode: 200,
-      body: JSON.stringify(
-        product
-      )
-    };
 };
