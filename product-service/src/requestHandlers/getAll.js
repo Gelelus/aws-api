@@ -1,5 +1,5 @@
 import products from '../data/products.json';
-import { getHeaders } from '../config/index.js'
+import { getHeaders } from '../helpers/index.js'
 
 export const getAllProducts = async event => {
     return {

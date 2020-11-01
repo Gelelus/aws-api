@@ -10,7 +10,6 @@ provider:
 
 plugins:
   - serverless-webpack
-
 custom:
   webpack:
     webpackConfig: 'webpack.config.js'
