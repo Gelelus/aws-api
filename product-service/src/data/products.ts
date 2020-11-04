@@ -1,4 +1,4 @@
-[
+export default [
   {
     "count": 4,
     "description": "product1 description",

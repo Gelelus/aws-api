@@ -1,7 +1,8 @@
-import products from '../data/products.json';
-import { getHeaders, generateErrorResponse } from '../helpers/index.js'
+import products from '../data/products';
+import { getHeaders, generateErrorResponse } from '../helpers'
+import {APIGatewayProxyHandler} from "aws-lambda";
 
-export const getProductById = async event => {
+export const getProductById: APIGatewayProxyHandler  = async event => {
     try {
         const id = event.pathParameters.productId;
         const product = products.find(a => a.id === id);
