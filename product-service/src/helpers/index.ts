@@ -23,6 +23,7 @@ const generateErrorResponse = (err: HttpRequestError) => {
 };
 
 const generateSuccessResponse = (result: any) => {
+  console.log(result)
   return {
     statusCode: 200,
     body: JSON.stringify(result),

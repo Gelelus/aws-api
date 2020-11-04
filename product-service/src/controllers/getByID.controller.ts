@@ -5,7 +5,7 @@ import { generateErrorResponse, generateSuccessResponse } from "../helpers";
 
 export const getProductById: APIGatewayProxyHandler = async (event) => {
   try {
-    const result = getByID(event.pathParameters.productId);
+    const result = await getByID(event.pathParameters.productId);
     return generateSuccessResponse(result);
   } catch (e) {
     return generateErrorResponse(e);
