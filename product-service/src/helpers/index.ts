@@ -6,12 +6,20 @@ const getHeaders = () => {
   };
 };
 
-const generateErrorResponse = (e, statusCode) => {
+const generateErrorResponse = (err: Error) => {
   return {
-    statusCode: statusCode,
-    body: JSON.stringify({ err: e.message }),
+    statusCode: 500, //err.status ||
+    body: JSON.stringify({ err: err.message }),
     headers: getHeaders(),
   };
 };
 
-export { getHeaders, generateErrorResponse };
+const generateSuccessResponse = (result: any) => {
+  return {
+    statusCode: 200,
+    body: JSON.stringify(result),
+    headers: getHeaders(),
+  };
+};
+
+export { generateSuccessResponse, generateErrorResponse };

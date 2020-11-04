@@ -1,6 +1,6 @@
 import "source-map-support/register";
 
-import { getAllProducts } from "./src/requestHandlers/getAll";
-import { getProductById } from "./src/requestHandlers/getByID";
+import { getProductById } from "./src/controllers/getByID.controller";
+import { getAllProducts } from "./src/controllers/getAll.controller";
 
 export { getAllProducts, getProductById };
