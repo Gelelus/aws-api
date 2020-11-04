@@ -1,3 +1,11 @@
+class HttpRequestError extends Error {
+  constructor(public statusCode: number, public message: string) {
+    super();
+    this.statusCode = statusCode;
+    this.message = message;
+  }
+}
+
 const getHeaders = () => {
   return {
     "Access-Control-Allow-Headers": "Content-Type",
@@ -6,9 +14,9 @@ const getHeaders = () => {
   };
 };
 
-const generateErrorResponse = (err: Error) => {
+const generateErrorResponse = (err: HttpRequestError) => {
   return {
-    statusCode: 500, //err.status ||
+    statusCode: err.statusCode || 500,
     body: JSON.stringify({ err: err.message }),
     headers: getHeaders(),
   };
@@ -22,4 +30,4 @@ const generateSuccessResponse = (result: any) => {
   };
 };
 
-export { generateSuccessResponse, generateErrorResponse };
+export { generateSuccessResponse, generateErrorResponse, HttpRequestError };
