@@ -1,13 +1,15 @@
 import { APIGatewayProxyHandler } from "aws-lambda";
 
-import getByID from "../services/getByID.service";
+import addOne from "../services/addOne.service";
 import { generateErrorResponse, generateSuccessResponse } from "../helpers";
+import { productRequestValidation } from "../helpers/validation";
 import logger from '../helpers/logger'
 
-export const getProductById: APIGatewayProxyHandler = async (event) => {
+export const addOneProduct: APIGatewayProxyHandler = async (event) => {
   logger(event)
   try {
-    const result = await getByID(event.pathParameters.productId);
+    const params = productRequestValidation(event.body);
+    const result = await addOne(params);
     return generateSuccessResponse(result);
   } catch (e) {
     return generateErrorResponse(e);

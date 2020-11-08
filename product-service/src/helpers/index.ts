@@ -1,3 +1,5 @@
+import { ClientConfig } from "pg";
+
 class HttpRequestError extends Error {
   constructor(public statusCode: number, public message: string) {
     super();
@@ -14,6 +16,28 @@ const getHeaders = () => {
   };
 };
 
+const getDbConfig = () => {
+  const {
+    PG_HOST,
+    PG_PORT,
+    PG_DATABASE,
+    PG_USERNAME,
+    PG_PASSWORD,
+  } = process.env;
+  const config: ClientConfig = {
+    host: PG_HOST,
+    port: +PG_PORT,
+    database: PG_DATABASE,
+    user: PG_USERNAME,
+    password: PG_PASSWORD,
+    ssl: {
+      rejectUnauthorized: false,
+    },
+    connectionTimeoutMillis: 5000,
+  };
+  return config;
+};
+
 const generateErrorResponse = (err: HttpRequestError) => {
   return {
     statusCode: err.statusCode || 500,
@@ -23,7 +47,6 @@ const generateErrorResponse = (err: HttpRequestError) => {
 };
 
 const generateSuccessResponse = (result: any) => {
-  console.log(result)
   return {
     statusCode: 200,
     body: JSON.stringify(result),
@@ -31,4 +54,9 @@ const generateSuccessResponse = (result: any) => {
   };
 };
 
-export { generateSuccessResponse, generateErrorResponse, HttpRequestError };
+export {
+  generateSuccessResponse,
+  generateErrorResponse,
+  HttpRequestError,
+  getDbConfig,
+};

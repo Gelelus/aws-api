@@ -19,6 +19,13 @@ const serverlessConfiguration: Serverless = {
     profile: "gelelus",
     region: "eu-west-1",
     stage: "dev",
+    environment: {
+      PG_HOST: "***********",
+      PG_PORT: 1111,
+      PG_DATABASE: "***********",
+      PG_USERNAME: "***********",
+      PG_PASSWORD: "***********",
+    },
   },
   functions: {
     getProductsList: {
@@ -40,6 +47,18 @@ const serverlessConfiguration: Serverless = {
           http: {
             method: "get",
             path: "products/{productId}",
+            cors: true,
+          },
+        },
+      ],
+    },
+    addOneProduct: {
+      handler: "main.addOneProduct",
+      events: [
+        {
+          http: {
+            method: "post",
+            path: "products",
             cors: true,
           },
         },
