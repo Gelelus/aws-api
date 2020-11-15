@@ -1,6 +1,5 @@
 import type { Serverless } from "serverless/aws";
-const IMPORT_SERVICE_BUCKET = "import-service-bucket";
-const UPLOAD_DIRECTORY = "uploaded";
+import {IMPORT_BUCKET, UPLOAD_PATH} from "./config"
 
 const serverlessConfiguration: Serverless = {
   service: {
@@ -60,11 +59,11 @@ const serverlessConfiguration: Serverless = {
       events: [
         {
           s3: {
-            bucket: IMPORT_SERVICE_BUCKET,
+            bucket: IMPORT_BUCKET,
             event: "s3:ObjectCreated:*",
             rules: [
               {
-                prefix: `${UPLOAD_DIRECTORY}/`,
+                prefix: `${UPLOAD_PATH}/`,
                 suffix: "",
               },
             ],
