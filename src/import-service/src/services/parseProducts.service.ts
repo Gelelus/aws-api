@@ -3,7 +3,7 @@ import { S3 } from "aws-sdk";
 import * as csv from "csv-parser";
 import { IMPORT_BUCKET, UPLOAD_PATH, PARSE_PATH } from "../../config"
 
-export default async (Records: S3EventRecord[]) => {
+export default (Records: S3EventRecord[]) => {
 
   const s3 = new S3({ region: "eu-west-1" });
   Records.forEach((record) => {
@@ -17,6 +17,7 @@ export default async (Records: S3EventRecord[]) => {
     s3Stream
       .pipe(csv())
       .on("data", (data) => {
+        console.log(data)
       })
       .on("end", async () => {
         const copyFrom = `${IMPORT_BUCKET}/${record.s3.object.key}`;
