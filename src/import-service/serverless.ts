@@ -22,6 +22,11 @@ const serverlessConfiguration: Serverless = {
     apiGateway: {
       minimumCompressionSize: 1024,
     },
+    environment: {
+      QUEUE_URL: {
+        "Fn::ImportValue": "CatalogItemsQueueUrl",
+      },
+    },
     iamRoleStatements: [
       {
         Effect: "Allow",
@@ -32,6 +37,13 @@ const serverlessConfiguration: Serverless = {
         Effect: "Allow",
         Action: "s3:*",
         Resource: "arn:aws:s3:::rs-import-bucket/*",
+      },
+      {
+        Effect: "Allow",
+        Action: "sqs:*",
+        Resource: {
+          "Fn::ImportValue": "CatalogItemsQueueArn",
+        },
       },
     ],
   },
