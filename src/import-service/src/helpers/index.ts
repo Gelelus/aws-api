@@ -1,3 +1,10 @@
+interface Product {
+  title: string;
+  description: string;
+  price: number;
+  count: number;
+}
+
 class HttpRequestError extends Error {
   constructor(public statusCode: number, public message: string) {
     super();
@@ -12,6 +19,15 @@ const getHeaders = () => {
     "Access-Control-Allow-Origin": "https://d1mv4b218fitsr.cloudfront.net",
     "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
   };
+};
+
+const parseProduct = (data): Product => {
+  const title = data.title || "";
+  const description = data.description || "";
+  const count = Number.isNaN(+data.price) ? 0 : +data.price;
+  const price = Number.isNaN(+data.price) ? -1 : +data.price;
+
+  return { title, description, price, count };
 };
 
 const generateErrorResponse = (err: HttpRequestError) => {
@@ -34,4 +50,5 @@ export {
   generateSuccessResponse,
   generateErrorResponse,
   HttpRequestError,
+  parseProduct,
 };

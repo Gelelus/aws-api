@@ -1,8 +1,15 @@
 import { HttpRequestError } from "./index";
 import Validator from "js-object-validation";
 
+interface Product  {
+  title: string
+  description: string
+  price: number
+  count: number
+};
+
 const productRequestValidation = (rawBody: string) => {
-  const body = JSON.parse(rawBody);
+  const body = JSON.parse(rawBody) as Product;
   const validations = {
     price: {
       number: true,
@@ -32,11 +39,13 @@ const productRequestValidation = (rawBody: string) => {
   }
 
   return {
-    price: body.price as number,
-    count: body.count as number,
-    description: body.description as string,
-    title: body.title as string,
-  };
+    price: body.price,
+    count: body.count,
+    description: body.description,
+    title: body.title,
+  } 
 };
 
-export { productRequestValidation };
+
+
+export { productRequestValidation, Product };
