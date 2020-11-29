@@ -1,5 +1,5 @@
 import type { Serverless } from "serverless/aws";
-import {IMPORT_BUCKET, UPLOAD_PATH} from "./config"
+import { IMPORT_BUCKET, UPLOAD_PATH } from "./config";
 
 const serverlessConfiguration: Serverless = {
   service: {
@@ -13,7 +13,7 @@ const serverlessConfiguration: Serverless = {
     },
   },
 
-  plugins: ["serverless-webpack","serverless-pseudo-parameters"],
+  plugins: ["serverless-webpack", "serverless-pseudo-parameters"],
   provider: {
     name: "aws",
     runtime: "nodejs12.x",
@@ -47,6 +47,23 @@ const serverlessConfiguration: Serverless = {
       },
     ],
   },
+  resources: {
+    Resources: {
+      GatewayResponseDefault400: {
+        Type: "AWS::ApiGateway::GatewayResponse",
+        Properties: {
+          ResponseParameters: {
+            "gatewayresponse.header.Access-Control-Allow-Origin": "'*'",
+            "gatewayresponse.header.Access-Control-Allow-Headers": "'*'",
+          },
+          ResponseType: "DEFAULT_4XX",
+          RestApiId: {
+            Ref: "ApiGatewayRestApi",
+          },
+        },
+      },
+    },
+  },
   functions: {
     importProductsFile: {
       handler: "main.importProductsFile",
@@ -62,12 +79,13 @@ const serverlessConfiguration: Serverless = {
                 },
               },
             },
-            authorizer:{
-              name:"tokenAuthorizer",  
-              arn: "arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:authorization-service-dev-basicAuthorizer", 
+            authorizer: {
+              name: "tokenAuthorizer",
+              arn:
+                "arn:aws:lambda:#{AWS::Region}:#{AWS::AccountId}:function:authorization-service-dev-basicAuthorizer",
               resultTtlInSeconds: 0,
               identitySource: "method.request.header.Authorization",
-              type: "token"
+              type: "token",
             },
           },
         },
