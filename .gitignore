@@ -15,3 +15,5 @@ node_modules
 # Elastic Beanstalk Files
 .elasticbeanstalk
 .ebextensions
+
+dist
