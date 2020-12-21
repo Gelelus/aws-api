@@ -8,4 +8,12 @@ node_modules
 .webpack
 
 .vscode
+
+# credentials
 .env
+
+# Elastic Beanstalk Files
+.elasticbeanstalk
+.ebextensions
+
+dist
